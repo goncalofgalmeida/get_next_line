@@ -6,18 +6,28 @@
 /*   By: gjose-fr <gjose-fr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:07:20 by gjose-fr          #+#    #+#             */
-/*   Updated: 2024/11/20 10:20:44 by gjose-fr         ###   ########.fr       */
+/*   Updated: 2024/11/27 11:12:20 by gjose-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1024
+# endif
+
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <fcntl.h>
 
-# define BUFFER_SIZE 1024
+typedef struct s_list
+{
+	char			*str_buf;
+	struct s_list	*next;
+}				t_list;
+
 
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
