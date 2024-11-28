@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gjose-fr <gjose-fr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: g24force <g24force@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:06:45 by gjose-fr          #+#    #+#             */
-/*   Updated: 2024/11/27 16:05:13 by gjose-fr         ###   ########.fr       */
+/*   Updated: 2024/11/28 17:33:21 by g24force         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,18 @@ int	main(void)
 	}
 	close(fd);
 	return (0);
+}
+
+
+char	*get_next_line(int fd)
+{
+	char	*s
+	//verificar se está tudo bem com o fd
+	if (fd < 0)
+		return (NULL);
+	//ler os 5 bytes do file e passar para o stash
+	//ler a variavel buf e ver se tem um \n
+		//se não, ler os 5 bytes seguintes
+	//se tiver \n, copiar o conteúdo do stash para uma variavel, mas só até ao ao \n
+	//retornar a string
 }
