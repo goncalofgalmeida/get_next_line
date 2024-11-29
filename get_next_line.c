@@ -3,56 +3,95 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: g24force <g24force@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gjose-fr <gjose-fr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:06:45 by gjose-fr          #+#    #+#             */
-/*   Updated: 2024/11/29 12:41:50 by g24force         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:21:23 by gjose-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-/* char	*set_line(char *buf)
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void			*ptr;
+	unsigned char	*p;
+	size_t			i;
+
+	if (nmemb == 0 || size == 0)
+		return (malloc(0));
+	if (nmemb > SIZE_MAX / size)
+		return (NULL);
+	ptr = malloc(nmemb * size);
+	if (!ptr)
+		return (NULL);
+	p = (unsigned char *)ptr;
+	i = 0;
+	while (i < nmemb)
+	{
+		p[i] = 0;
+		i++;
+	}
+	return ((void *)p);
+}
+
+int	ft_has_newline(char * str)
+{
+	if (!str)
+		return (0);
+	if (ft_strchr(str, '\n') == NULL)
+		return (0);
+	else
+		return (1);
+}
+
+char	*ft_fill_stash(char *stash, char *str)
+{
+	//realocar a memoria do stash
+	//concat str ao stash
+	if (!stash)
+		ft_strjoin("", str);
+	else
+		ft_strjoin(stash, str);
+	return (stash);
+}
+
+char	*ft_fill_line(char *stash, char *line)
 {
 	int	i;
 
 	i = 0;
-	while (buf[i] != '\n' || buf[i] != '\0')
+	while (stash[i] != '\n')
+		i++;
+	line = (char *)malloc((i + 1) * sizeof(char));
+	i = 0;
+	while (stash[i] != '\n')
 	{
+		line[i] = stash[i];
 		i++;
 	}
-	
-}
-
-int	check_buf()
-{
-	
-}
-
-char	*fill_line_buffer(int fd, char *remain, char *buf)
-{
-	int		chars_read;
-
-	while (chars_read = read(fd, buf, BUFFER_SIZE))
-	{
-		
-	}
+	line[i] = '\n';
+	return (line);
 }
 
 char	*get_next_line(int fd)
 {
-	char	*buf;
-	char	*line;
+	static char	*stash;
+	char		*buf;
+	char		*line;
 
 	if (fd < 0)
 		return (NULL);
-	buf = malloc(BUFFER_SIZE);
-	line = malloc(BUFFER_SIZE);
-	if (!buf)
-		return (NULL);
-	line = fill_line_buffer(fd, remain, buf);
-	free(buf);
-	set_line()
+	buf = (char *) ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	while (!ft_has_newline(buf))
+	{
+		read(fd, buf, BUFFER_SIZE);
+		buf[BUFFER_SIZE] = '\0';
+		stash = ft_fill_stash(buf, stash);
+	}
+	line = NULL;
+	line = ft_fill_line(stash, line);
+	//limpar o stash para recomecar a partir do \n
 	return (line);
 }
 
@@ -68,53 +107,10 @@ int	main(void)
 	{
 		printf("%s", line);
 		free(line);
-		line = get_next_line(fd);
+		//line = get_next_line(fd);
+		line = 0;
 	}
+	free(line);
 	close(fd);
 	return (0);
-} */
-
-int	ft_has_newline(char * str)
-{
-	if (ft_strchr(str, '\n') == NULL)
-		return (0);
-	else
-		return (1);
-}
-
-void	ft_fill_stash(char *str, char *stash)
-{
-	//realocar a memoria do stash
-	//concat str ao stash
-}
-
-void	ft_fill_line(char *stash)
-{
-	//posso alocar aqui a memoria, ou recebe a variavel já como parametro
-	ft_strdup()
-	//stash
-	//concat str ao stash
-}
-
-char	*get_next_line(int fd)
-{
-	char		*buf;
-	static char	*stash;
-	//verificar se está tudo bem com o fd
-	if (fd < 0)
-		return (NULL);
-	buf = (char *) malloc((BUFFER_SIZE + 1) * sizeof(char)); //verificar
-	stash = (char *) malloc((BUFFER_SIZE + 1) * sizeof(char)); //que size para o stash?
-	//ler os 5 bytes do file e passar para o stash
-	//ler a variavel buf e ver se tem um \n
-		//se não, ler os 5 bytes seguintes
-	while (!ft_has_newline(buf))
-	{
-		read(fd, buf, BUFFER_SIZE);
-		ft_fill_stash(buf, stash);
-	}
-	//implementar a realloc para o stash e return_var?
-	ft_fill_line();
-	//se tiver \n, copiar o conteúdo do stash para uma variavel, mas só até ao ao \n
-	//retornar a string
 }

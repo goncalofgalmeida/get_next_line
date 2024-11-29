@@ -6,7 +6,7 @@
 /*   By: gjose-fr <gjose-fr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:07:20 by gjose-fr          #+#    #+#             */
-/*   Updated: 2024/11/27 11:12:20 by gjose-fr         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:14:01 by gjose-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <stdint.h> //posso manter isto por causa do SIZE_MAX?
 
 typedef struct s_list
 {

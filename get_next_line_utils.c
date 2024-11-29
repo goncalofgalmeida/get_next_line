@@ -6,7 +6,7 @@
 /*   By: gjose-fr <gjose-fr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 10:06:07 by gjose-fr          #+#    #+#             */
-/*   Updated: 2024/11/27 15:19:00 by gjose-fr         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:02:07 by gjose-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	return (src_length);
 }
 
-char	*ft_strdup(const char *s)
-{
-	char	*str;
-	size_t	len;
-
-	len = ft_strlen(s);
-	str = (char *)malloc((len + 1) * sizeof(char));
-	if (!str)
-		return (NULL);
-	ft_strlcpy(str, s, len + 1);
-	return (str);
-}
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+/* char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char			*substr;
 	unsigned int	i;
@@ -91,7 +78,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	ft_strlcpy(substr, s + start, size + 1);
 	return (substr);
-}
+} */
 
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
@@ -132,3 +119,16 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_strlcat(strptr, s2, s1_len + s2_len + 1);
 	return (strptr);
 }
+
+/* char	*ft_strdup(const char *s)
+{
+	char	*str;
+	size_t	len;
+
+	len = ft_strlen(s);
+	str = (char *)malloc((len + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	ft_strlcpy(str, s, len + 1);
+	return (str);
+} */
