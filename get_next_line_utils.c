@@ -6,7 +6,7 @@
 /*   By: gjose-fr <gjose-fr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 10:06:07 by gjose-fr          #+#    #+#             */
-/*   Updated: 2024/11/29 15:02:07 by gjose-fr         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:32:10 by gjose-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ size_t	ft_strlen(const char *s)
 {
 	size_t	i;
 
+	if (!s)
+		return (0);
 	i = 0;
 	while (s[i] != '\0')
 		i++;

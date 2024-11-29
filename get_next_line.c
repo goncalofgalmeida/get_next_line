@@ -6,7 +6,7 @@
 /*   By: gjose-fr <gjose-fr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:06:45 by gjose-fr          #+#    #+#             */
-/*   Updated: 2024/11/29 15:21:23 by gjose-fr         ###   ########.fr       */
+/*   Updated: 2024/11/29 16:50:34 by gjose-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		return (NULL);
 	p = (unsigned char *)ptr;
 	i = 0;
-	while (i < nmemb)
+	while (i < nmemb * size)
 	{
 		p[i] = 0;
 		i++;
@@ -71,6 +71,8 @@ char	*ft_fill_line(char *stash, char *line)
 		i++;
 	}
 	line[i] = '\n';
+	i++;
+	line[i] = '\0';
 	return (line);
 }
 
@@ -92,6 +94,7 @@ char	*get_next_line(int fd)
 	line = NULL;
 	line = ft_fill_line(stash, line);
 	//limpar o stash para recomecar a partir do \n
+	free(buf);
 	return (line);
 }
 
