@@ -6,7 +6,7 @@
 /*   By: gjose-fr <gjose-fr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 10:06:07 by gjose-fr          #+#    #+#             */
-/*   Updated: 2024/11/29 15:32:10 by gjose-fr         ###   ########.fr       */
+/*   Updated: 2024/12/01 12:05:15 by gjose-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (strptr);
 }
 
-/* char	*ft_strdup(const char *s)
+char	*ft_strdup(const char *s)
 {
 	char	*str;
 	size_t	len;
@@ -133,4 +133,4 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	ft_strlcpy(str, s, len + 1);
 	return (str);
-} */
+}

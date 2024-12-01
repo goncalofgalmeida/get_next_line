@@ -6,7 +6,7 @@
 /*   By: gjose-fr <gjose-fr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:06:45 by gjose-fr          #+#    #+#             */
-/*   Updated: 2024/11/29 16:50:34 by gjose-fr         ###   ########.fr       */
+/*   Updated: 2024/12/01 13:37:52 by gjose-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,12 @@ int	ft_has_newline(char * str)
 		return (1);
 }
 
-char	*ft_fill_stash(char *stash, char *str)
+char	*ft_fill_stash(char *stash, char *buf)
 {
-	//realocar a memoria do stash
-	//concat str ao stash
 	if (!stash)
-		ft_strjoin("", str);
+		return(ft_strjoin("", buf));
 	else
-		ft_strjoin(stash, str);
-	return (stash);
+		return(ft_strjoin(stash, buf));
 }
 
 char	*ft_fill_line(char *stash, char *line)
@@ -61,11 +58,11 @@ char	*ft_fill_line(char *stash, char *line)
 	int	i;
 
 	i = 0;
-	while (stash[i] != '\n')
+	while (stash[i] != '\n' && stash[i] != '\0')
 		i++;
-	line = (char *)malloc((i + 1) * sizeof(char));
+	line = (char *)malloc((i + 2) * sizeof(char)); //espaco para o nl e nul
 	i = 0;
-	while (stash[i] != '\n')
+	while (stash[i] != '\n' && stash[i] != '\0')
 	{
 		line[i] = stash[i];
 		i++;
@@ -74,6 +71,27 @@ char	*ft_fill_line(char *stash, char *line)
 	i++;
 	line[i] = '\0';
 	return (line);
+}
+
+char	*ft_update_stash(char *stash)
+{
+	char	*nl_position;
+	char	*new_stash;
+
+	if (!stash)
+		return (NULL);
+	nl_position = ft_strchr(stash, '\n');
+	if (!nl_position)
+	{
+		free(stash);
+		return (NULL);
+	}
+	new_stash = ft_strdup(nl_position + 1);
+	if (!new_stash)
+		return (NULL);
+	free(stash);
+	stash = NULL;
+	return (new_stash);
 }
 
 char	*get_next_line(int fd)
@@ -93,7 +111,7 @@ char	*get_next_line(int fd)
 	}
 	line = NULL;
 	line = ft_fill_line(stash, line);
-	//limpar o stash para recomecar a partir do \n
+	stash = ft_update_stash(stash);	
 	free(buf);
 	return (line);
 }
@@ -110,8 +128,8 @@ int	main(void)
 	{
 		printf("%s", line);
 		free(line);
-		//line = get_next_line(fd);
-		line = 0;
+		line = get_next_line(fd);
+		//line = 0;
 	}
 	free(line);
 	close(fd);
