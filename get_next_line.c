@@ -6,7 +6,7 @@
 /*   By: gjose-fr <gjose-fr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:06:45 by gjose-fr          #+#    #+#             */
-/*   Updated: 2024/12/01 13:37:52 by gjose-fr         ###   ########.fr       */
+/*   Updated: 2024/12/03 15:33:19 by gjose-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ char	*ft_fill_line(char *stash, char *line)
 	int	i;
 
 	i = 0;
+	if (stash[i] == '\0' || !stash)
+		return (NULL);
 	while (stash[i] != '\n' && stash[i] != '\0')
 		i++;
 	line = (char *)malloc((i + 2) * sizeof(char)); //espaco para o nl e nul
@@ -99,16 +101,20 @@ char	*get_next_line(int fd)
 	static char	*stash;
 	char		*buf;
 	char		*line;
+	int			c_read;
 
-	if (fd < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buf = (char *) ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	while (!ft_has_newline(buf))
+	c_read = 1;
+	while (c_read != 0 && !ft_has_newline(buf)) // ou && ??
 	{
-		read(fd, buf, BUFFER_SIZE);
+		c_read = read(fd, buf, BUFFER_SIZE);
 		buf[BUFFER_SIZE] = '\0';
-		stash = ft_fill_stash(buf, stash);
+		stash = ft_fill_stash(stash, buf);
 	}
+	if (c_read == 0)
+		return (NULL);
 	line = NULL;
 	line = ft_fill_line(stash, line);
 	stash = ft_update_stash(stash);	
@@ -116,7 +122,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	main(void)
+/* int	main(void)
 {
 	int 	fd = open("test.txt", O_RDONLY);
 	char 	*line;
@@ -134,4 +140,4 @@ int	main(void)
 	free(line);
 	close(fd);
 	return (0);
-}
+} */
