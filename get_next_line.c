@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gjose-fr <gjose-fr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: g24force <g24force@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:06:45 by gjose-fr          #+#    #+#             */
-/*   Updated: 2024/12/03 15:33:19 by gjose-fr         ###   ########.fr       */
+/*   Updated: 2024/12/07 00:42:38 by g24force         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,35 +47,45 @@ int	ft_has_newline(char * str)
 
 char	*ft_fill_stash(char *stash, char *buf)
 {
+	char	*updated_stash;
+
 	if (!stash)
 		return(ft_strjoin("", buf));
-	else
-		return(ft_strjoin(stash, buf));
+	if (!buf || buf[0] == '\0')
+		return(stash );
+	updated_stash = ft_strjoin(stash, buf);
+	free(stash);
+	return(updated_stash);
 }
 
 char	*ft_fill_line(char *stash, char *line)
 {
 	int	i;
 
-	i = 0;
-	if (stash[i] == '\0' || !stash)
+	if (!stash || stash[0] == '\0')
 		return (NULL);
+	i = 0;
 	while (stash[i] != '\n' && stash[i] != '\0')
 		i++;
-	line = (char *)malloc((i + 2) * sizeof(char)); //espaco para o nl e nul
+	line = (char *)calloc((i + 2),sizeof(char)); //espaco para o nl e nul
+	if (!line)
+		return (NULL);
 	i = 0;
 	while (stash[i] != '\n' && stash[i] != '\0')
 	{
 		line[i] = stash[i];
 		i++;
 	}
-	line[i] = '\n';
-	i++;
+	if (stash[i] = '\n')
+	{
+		line[i] = '\n';
+		i++;
+	}
 	line[i] = '\0';
 	return (line);
 }
 
-char	*ft_update_stash(char *stash)
+char	*ft_clear_stash(char *stash)
 {
 	char	*nl_position;
 	char	*new_stash;
@@ -83,16 +93,14 @@ char	*ft_update_stash(char *stash)
 	if (!stash)
 		return (NULL);
 	nl_position = ft_strchr(stash, '\n');
-	if (!nl_position)
+	if (!nl_position || *(nl_position + 1) == '\0')
 	{
 		free(stash);
 		return (NULL);
 	}
 	new_stash = ft_strdup(nl_position + 1);
-	if (!new_stash)
-		return (NULL);
+	
 	free(stash);
-	stash = NULL;
 	return (new_stash);
 }
 
@@ -107,22 +115,29 @@ char	*get_next_line(int fd)
 		return (NULL);
 	buf = (char *) ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	c_read = 1;
-	while (c_read != 0 && !ft_has_newline(buf)) // ou && ??
+	while (c_read > 0 && !ft_has_newline(stash))
 	{
 		c_read = read(fd, buf, BUFFER_SIZE);
-		buf[BUFFER_SIZE] = '\0';
+		if (c_read < 0)
+		{
+			free(buf);
+			return (NULL);
+		}
+		buf[c_read] = '\0';
 		stash = ft_fill_stash(stash, buf);
 	}
-	if (c_read == 0)
-		return (NULL);
-	line = NULL;
-	line = ft_fill_line(stash, line);
-	stash = ft_update_stash(stash);	
 	free(buf);
+	if (!stash || *stash == '\0')
+	{
+		free(stash);
+		return (NULL);
+	}
+	line = ft_fill_line(stash, line);
+	stash = ft_clear_stash(stash);	
 	return (line);
 }
 
-/* int	main(void)
+int	main(void)
 {
 	int 	fd = open("test.txt", O_RDONLY);
 	char 	*line;
@@ -140,4 +155,4 @@ char	*get_next_line(int fd)
 	free(line);
 	close(fd);
 	return (0);
-} */
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gjose-fr <gjose-fr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: g24force <g24force@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 10:06:07 by gjose-fr          #+#    #+#             */
-/*   Updated: 2024/12/01 12:05:15 by gjose-fr         ###   ########.fr       */
+/*   Updated: 2024/12/07 00:22:36 by g24force         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	ft_strlcpy(strptr, s1, s1_len + 1);
 	ft_strlcat(strptr, s2, s1_len + s2_len + 1);
+	strptr[s1_len + s2_len] = '\0'; //acho que é reduntante, já faz isto no cat
 	return (strptr);
 }
 
@@ -127,6 +128,8 @@ char	*ft_strdup(const char *s)
 	char	*str;
 	size_t	len;
 
+	if (!s)
+		return (NULL);
 	len = ft_strlen(s);
 	str = (char *)malloc((len + 1) * sizeof(char));
 	if (!str)
