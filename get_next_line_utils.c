@@ -6,11 +6,34 @@
 /*   By: gjose-fr <gjose-fr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 10:06:07 by gjose-fr          #+#    #+#             */
-/*   Updated: 2024/12/08 15:35:01 by gjose-fr         ###   ########.fr       */
+/*   Updated: 2024/12/08 15:35:51 by gjose-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void			*ptr;
+	unsigned char	*p;
+	size_t			i;
+
+	if (nmemb == 0 || size == 0)
+		return (malloc(0));
+	if (nmemb > SIZE_MAX / size)
+		return (NULL);
+	ptr = malloc(nmemb * size);
+	if (!ptr)
+		return (NULL);
+	p = (unsigned char *)ptr;
+	i = 0;
+	while (i < nmemb * size)
+	{
+		p[i] = 0;
+		i++;
+	}
+	return ((void *)p);
+}
 
 size_t	ft_strlen(const char *s)
 {

@@ -6,44 +6,11 @@
 /*   By: gjose-fr <gjose-fr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:06:45 by gjose-fr          #+#    #+#             */
-/*   Updated: 2024/12/08 11:34:10 by gjose-fr         ###   ########.fr       */
+/*   Updated: 2024/12/08 15:35:57 by gjose-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-void	*ft_calloc(size_t nmemb, size_t size)
-{
-	void			*ptr;
-	unsigned char	*p;
-	size_t			i;
-
-	if (nmemb == 0 || size == 0)
-		return (malloc(0));
-	if (nmemb > SIZE_MAX / size)
-		return (NULL);
-	ptr = malloc(nmemb * size);
-	if (!ptr)
-		return (NULL);
-	p = (unsigned char *)ptr;
-	i = 0;
-	while (i < nmemb * size)
-	{
-		p[i] = 0;
-		i++;
-	}
-	return ((void *)p);
-}
-
-int	ft_has_newline(char *str)
-{
-	if (!str)
-		return (0);
-	if (ft_strchr(str, '\n') == NULL)
-		return (0);
-	else
-		return (1);
-}
 
 char	*ft_fill_line(char *stash, char *line)
 {
@@ -139,7 +106,7 @@ char	*get_next_line(int fd)
 			break ;
 		buf[c_read] = '\0';
 		stash = ft_update_stash(stash, buf, 0);
-		if (ft_has_newline(stash))
+		if (ft_strchr(stash, '\n'))
 			break ;	
 	}
 	free(buf);
