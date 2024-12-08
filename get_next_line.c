@@ -6,7 +6,7 @@
 /*   By: gjose-fr <gjose-fr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:06:45 by gjose-fr          #+#    #+#             */
-/*   Updated: 2024/12/08 11:09:24 by gjose-fr         ###   ########.fr       */
+/*   Updated: 2024/12/08 11:34:10 by gjose-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	return ((void *)p);
 }
 
-int	ft_has_newline(char * str)
+int	ft_has_newline(char *str)
 {
 	if (!str)
 		return (0);
@@ -43,19 +43,6 @@ int	ft_has_newline(char * str)
 		return (0);
 	else
 		return (1);
-}
-
-char	*ft_fill_stash(char *stash, char *buf)
-{
-	char	*updated_stash;
-
-	if (!stash)
-		return(ft_strjoin("", buf));
-	if (!buf || buf[0] == '\0')
-		return(stash );
-	updated_stash = ft_strjoin(stash, buf);
-	free(stash);
-	return(updated_stash);
 }
 
 char	*ft_fill_line(char *stash, char *line)
@@ -67,7 +54,7 @@ char	*ft_fill_line(char *stash, char *line)
 	i = 0;
 	while (stash[i] != '\n' && stash[i] != '\0')
 		i++;
-	line = (char *)calloc((i + 2),sizeof(char));
+	line = (char *)calloc((i + 2), sizeof(char));
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -85,7 +72,33 @@ char	*ft_fill_line(char *stash, char *line)
 	return (line);
 }
 
-char	*ft_clear_stash(char *stash)
+char	*ft_update_stash(char *stash, char *buf, int clear)
+{
+	char	*updated_stash;
+	char	*nl_position;
+
+	if (clear)
+	{
+		nl_position = ft_strchr(stash, '\n');
+		if (!nl_position || *(nl_position + 1) == '\0')
+		{
+			free(stash);
+			return (NULL);
+		}
+		updated_stash = ft_strdup(nl_position + 1);
+		free(stash);
+		return (updated_stash);
+	}
+	if (!stash)
+		return (ft_strjoin("", buf));
+	if (!buf || buf[0] == '\0')
+		return (stash);
+	updated_stash = ft_strjoin(stash, buf);
+	free(stash);
+	return (updated_stash);
+}
+
+/* char	*ft_clear_stash(char *stash)
 {
 	char	*nl_position;
 	char	*new_stash;
@@ -99,10 +112,9 @@ char	*ft_clear_stash(char *stash)
 		return (NULL);
 	}
 	new_stash = ft_strdup(nl_position + 1);
-	
 	free(stash);
 	return (new_stash);
-}
+} */
 
 char	*get_next_line(int fd)
 {
@@ -124,11 +136,11 @@ char	*get_next_line(int fd)
 			return (NULL);
 		}
 		if (c_read == 0)
-			break;
+			break ;
 		buf[c_read] = '\0';
-		stash = ft_fill_stash(stash, buf);
+		stash = ft_update_stash(stash, buf, 0);
 		if (ft_has_newline(stash))
-			break;	
+			break ;	
 	}
 	free(buf);
 	if (!stash || *stash == '\0')
@@ -138,7 +150,7 @@ char	*get_next_line(int fd)
 	}
 	line = NULL;
 	line = ft_fill_line(stash, line);
-	stash = ft_clear_stash(stash);	
+	stash = ft_update_stash(stash, buf, 1);	
 	return (line);
 }
 
