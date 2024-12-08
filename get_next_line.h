@@ -6,7 +6,7 @@
 /*   By: gjose-fr <gjose-fr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:07:20 by gjose-fr          #+#    #+#             */
-/*   Updated: 2024/12/01 13:19:30 by gjose-fr         ###   ########.fr       */
+/*   Updated: 2024/12/08 15:36:48 by gjose-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,11 @@ typedef struct s_list
 	struct s_list	*next;
 }				t_list;
 
-
+void	*ft_calloc(size_t nmemb, size_t size);
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
-//size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 char	*ft_strdup(const char *s);
-//char	*ft_substr(char const *s, unsigned int start, size_t len);
-//size_t	ft_strlcat(char *dst, const char *src, size_t size);
 char	*ft_strjoin(char const *s1, char const *s2);
-
 char	*get_next_line(int fd);
 
 #endif
