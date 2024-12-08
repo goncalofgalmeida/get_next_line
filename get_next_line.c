@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: g24force <g24force@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gjose-fr <gjose-fr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:06:45 by gjose-fr          #+#    #+#             */
-/*   Updated: 2024/12/07 00:42:38 by g24force         ###   ########.fr       */
+/*   Updated: 2024/12/08 11:09:24 by gjose-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*ft_fill_line(char *stash, char *line)
 	i = 0;
 	while (stash[i] != '\n' && stash[i] != '\0')
 		i++;
-	line = (char *)calloc((i + 2),sizeof(char)); //espaco para o nl e nul
+	line = (char *)calloc((i + 2),sizeof(char));
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -76,7 +76,7 @@ char	*ft_fill_line(char *stash, char *line)
 		line[i] = stash[i];
 		i++;
 	}
-	if (stash[i] = '\n')
+	if (stash[i] == '\n')
 	{
 		line[i] = '\n';
 		i++;
@@ -115,7 +115,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	buf = (char *) ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	c_read = 1;
-	while (c_read > 0 && !ft_has_newline(stash))
+	while (c_read > 0)
 	{
 		c_read = read(fd, buf, BUFFER_SIZE);
 		if (c_read < 0)
@@ -123,8 +123,12 @@ char	*get_next_line(int fd)
 			free(buf);
 			return (NULL);
 		}
+		if (c_read == 0)
+			break;
 		buf[c_read] = '\0';
 		stash = ft_fill_stash(stash, buf);
+		if (ft_has_newline(stash))
+			break;	
 	}
 	free(buf);
 	if (!stash || *stash == '\0')
@@ -132,12 +136,13 @@ char	*get_next_line(int fd)
 		free(stash);
 		return (NULL);
 	}
+	line = NULL;
 	line = ft_fill_line(stash, line);
 	stash = ft_clear_stash(stash);	
 	return (line);
 }
 
-int	main(void)
+/* int	main(void)
 {
 	int 	fd = open("test.txt", O_RDONLY);
 	char 	*line;
@@ -155,4 +160,4 @@ int	main(void)
 	free(line);
 	close(fd);
 	return (0);
-}
+} */
