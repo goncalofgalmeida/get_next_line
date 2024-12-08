@@ -6,7 +6,7 @@
 /*   By: gjose-fr <gjose-fr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 10:06:07 by gjose-fr          #+#    #+#             */
-/*   Updated: 2024/12/08 15:35:51 by gjose-fr         ###   ########.fr       */
+/*   Updated: 2024/12/08 15:38:54 by gjose-fr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ char	*ft_strdup(const char *s)
 {
 	char	*str;
 	size_t	len;
+	int		i;
 
 	if (!s)
 		return (NULL);
@@ -99,6 +100,12 @@ char	*ft_strdup(const char *s)
 	str = (char *)malloc((len + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
-	ft_strlcpy(str, s, len + 1);
+	i = 0;
+	while (s[i])
+	{
+		str[i] = s[i];
+		i++;
+	}
+	str[i] = '\0';
 	return (str);
 }
