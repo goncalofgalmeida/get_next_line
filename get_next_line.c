@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gjose-fr <gjose-fr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: g24force <g24force@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:06:45 by gjose-fr          #+#    #+#             */
-/*   Updated: 2024/12/08 15:58:16 by gjose-fr         ###   ########.fr       */
+/*   Updated: 2024/12/08 19:39:36 by g24force         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*ft_clear_stash(char *stash)
 	return (new_stash);
 }
 
-static char	*read_line(int fd, char *stash)
+char	*read_line(int fd, char *stash)
 {
 	char	*buf;
 	int		c_read;
